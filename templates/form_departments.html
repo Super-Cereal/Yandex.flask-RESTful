@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% from "macros/render_field.html" import render_field %}
+    <h1 style='text-align: center'>Adding & editing a department</h1>
+    <form method='post' class='form'>
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        {{ render_field(form.title, class='form_field') }}
+        {{ render_field(form.chief, class='form_field') }}
+        {{ render_field(form.members, class='form_field') }}
+        {{ render_field(form.email, class='form_field') }}
+        <section>
+            {{ message }}
+            {{ form.submit(class='submit') }}
+        </section>
+    </form>
+{% endblock %}

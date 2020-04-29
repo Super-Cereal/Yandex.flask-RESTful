@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 style="text-align: center;">Works Log</h1>
+    {% for job in jobs %}
+        <table class="average-table">
+            <caption>
+                Activity # {{ job.id }}
+                {% if current_user.is_authenticated and (current_user == job.user or current_user.id == 1) %}
+                    <div style="font-size: 15px;" class='flexbox flex_r_nowr flex_jcspacebetween_aicenter'>
+                        <a href="/addjob/{{ job.id }}">
+                            <img src="/static/img/edit_icon1.png" alt="" width='13px'>edit</a>
+                        <a href="/deljob/{{ job.id }}">
+                            <img src="/static/img/delete_icon1.png" alt="" width="13px">delete</a>
+                    </div>
+                {% endif %}
+            </caption>
+            <thead>
+                <th>Title of activity</th>
+                <th>Team Leader</th>
+                <th>Duration</th>
+                <th>List of collaborators</th>
+                <th>Is finished</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ job.job }}</td>
+                    <td>{{ job.user.name }} {{ job.user.surname }}</td>
+                    <td>{{ job.work_size }} hours</td>
+                    <td>{{ job.collaborators }}</td>
+                    {% if job.is_finished %}
+                        <td style="background-color: rgb(200, 255, 110);">job is finished</td>  
+                    {% else %}  
+                        <td style="background-color: antiquewhite;">job is not finished</td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}
+
+{% block userbox %}
+    {% if current_user.is_authenticated %}
+        <div class="flexbox flex_c_nowr">
+            <a href="/addjob" class='btn'>
+                <img src="/static/img/add_icon1.png" alt="" height="13px"> Добавить еще работу</a>
+        </div>
+    {% endif %}
+{% endblock %}

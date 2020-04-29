@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 style="text-align: center;">Deparment Log</h1>
+    {% for department in departments %}
+        <table class="average-table">
+            <caption>
+                Deparment # {{ department.id }}
+                {% if current_user.is_authenticated and (current_user == department.user or current_user.id == 1) %}
+                    <div style="font-size: 15px;" class='flexbox flex_r_nowr flex_jcspacebetween_aicenter'>
+                        <a href="/departments_add/{{ department.id }}">
+                            <img src="/static/img/edit_icon1.png" alt="" width='13px'>edit</a>
+                        <a href="/departments_del/{{ department.id }}">
+                            <img src="/static/img/delete_icon1.png" alt="" width="13px">delete</a>
+                    </div>
+                {% endif %}
+            </caption>
+            <thead>
+                <th>Title of department</th>
+                <th>Chief</th>
+                <th>Members</th>
+                <th>Department Email</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ department.title }}</td>
+                    <td>{{ department.user.name }} {{ department.user.surname }}</td>
+                    <td>{{ department.members }}</td>
+                    <td>{{ department.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}
+
+{% block userbox %}
+    {% if current_user.is_authenticated %}
+        <div class="flexbox flex_c_nowr">
+            <a href="/departments_add" class='btn'>
+                <img src="/static/img/add_icon1.png" alt="" height="13px"> Добавить еще департамент</a>
+        </div>
+    {% endif %}
+{% endblock %}

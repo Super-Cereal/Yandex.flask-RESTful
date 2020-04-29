@@ -1,0 +1,21 @@
+<form method="post" class='form'>
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token() }}
+    {% for field in form if field.name not in ['csrf_token', 'remember_me', 'submit'] %}
+        <section>
+            {{ field.label() }}
+            {{ field(class='form_field')}}
+            {% for error in field.errors %}
+                <div class="alert-danger" role="alert">{{ error }}</div>
+            {% endfor %}
+        </section>
+    {% endfor %}
+    <section>
+        <div class="alert-danger" role="alert">{{ message }}</div>
+        {% if form.remember_me %}
+            {{ form.remember_me.label() }}
+            {{ form.remember_me() }}<br>
+        {% endif %}
+        {{ form.submit(class='submit') if form.submit}}
+    </section>
+</form>

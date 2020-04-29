@@ -1,0 +1,9 @@
+{% macro render_field(field) %}
+    <section>
+        {{ field.label() }}
+        {{ field(**kwargs) }}
+        {% for error in field.errors %}
+            <div class="alert-danger" role="alert">{{ error }}</div>
+        {% endfor %}
+    </section>
+{% endmacro %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <header class="page-header">
+        <h1>Миссия Колонизация Марса</h1>
+    </header>
+    <main class="flexbox flex_r_nowr">
+        <div class='main_content'>
+            {% block content %}{% endblock %}
+        </div>
+        <div class='user_box flexbox flex_c_nowr'>
+            <h2>User box</h2>
+            <div class="flexbox flex_c_nowr">
+                {% if current_user.is_authenticated %}
+                    <a class="btn" href="/logout">{{ current_user.surname }} {{current_user.name }}</a>
+                {% else %}
+                    <a class="btn" href="/register">Зарегистрироваться</a>
+                    <a class="btn" href="/login">Войти</a>
+                {% endif %}
+            </div>
+            {% block userbox %}{% endblock %}
+            <div class="flexbox flex_c_nowr usernav">
+                <a href="/" class="btn">К работам</a>
+                <a href="/departments" class="btn">К департаментам</a>
+            </div>
+        </div>
+    </main>
+    <footer class="page-footer"></footer>
+</body>
+</html>

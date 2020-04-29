@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% from "macros/render_field.html" import render_field %}
+    <h1 style='text-align: center'>Adding & editing a job</h1>
+    <form method='post' class='form'>
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        {{ render_field(form.job, class='form_field') }}
+        {{ render_field(form.team_leader, class='form_field') }}
+        {{ render_field(form.work_size, class='form_field') }}
+        {{ render_field(form.collaborators, class='form_field') }}
+        {{ render_field(form.is_finished) }}
+        <section>
+            {{ message }}
+            {{ form.submit(class='submit') }}
+        </section>
+    </form>
+{% endblock %}
