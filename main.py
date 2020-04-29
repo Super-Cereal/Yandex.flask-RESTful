@@ -7,7 +7,7 @@ from forms.login_form import LoginForm
 from forms.job_form import JobForm
 from forms.departments_form import DepartmentsForm
 
-from flask import Flask, render_template, redirect, abort, make_response, jsonify
+from flask import Flask, render_template, redirect, abort, make_response, jsonify, url_for
 from flask_login import LoginManager, login_user, logout_user, current_user
 from flask_restful import Api
 
@@ -297,11 +297,11 @@ def del_departments(id):
 
 @app.route('/home/<int:user_id>', methods=['GET'])
 def users_show(user_id):
-    user = requests.get(f'http://127.0.0.1:8000/api/users/{user_id}').json()
-    image = requests.get(f'http://127.0.0.1:8000/api/yamaps/{user["users"][0]["hometown"]}').json()
+    user = requests.get(f'{url_for("index", _external=True)}/api/users/{user_id}').json()
+    image = requests.get(f'{url_for("index", _external=True)}/api/yamaps/{user["users"][0]["hometown"]}').json()
     if 'error' in image:
         image = yandex_api.recode_image(open('static/img/none_image', 'rb'))
-    return render_template('home.html', image=image['image'], user=user["users"][0])
+    return render_template('home.html', title='Homepage', image=image['image'], user=user["users"][0])
 
 
 if __name__ == "__main__":
