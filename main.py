@@ -57,7 +57,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         session = db_session.create_session()
-        if session.query(User.email).filter(User.email == form.login_or_email.data).first():
+        if session.query(User.email).filter(User.email == form.email.data).first():
             return render_template('form_register.html', title='Регистрация',
                                    form=form,
                                    message="Пользователь с таким email или login уже есть")
@@ -69,7 +69,7 @@ def register():
             position=form.position.data,
             speciality=form.speciality.data,
             address=form.address.data,
-            email=form.login_or_email.data,
+            email=form.email.data,
         )
         user.set_password(form.password.data)
         session.add(user)

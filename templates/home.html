@@ -6,7 +6,7 @@
         <h2>Hometown - {{ user['hometown'] }}</h2>
         <img src="{{ 'data:image/png;base64,' + image }}" alt="" width="450px" height="450px">
         {% if current_user.id == user['id'] or current_user.id == 1 %}
-            <a href="/edituser/{{ current_user.id }}" class="btn">Редактировать аккаунт</a>
+            <a href="/edit_user/{{ current_user.id }}" class="btn">Редактировать аккаунт</a>
             {% if current_user.id == user['id'] %}
                 <a href="/logout" class="btn">Выйти из аккаунта</a>
             {% endif %}
