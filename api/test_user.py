@@ -3,7 +3,7 @@ from pprint import pprint
 
 
 # правильный зaпрос
-pprint(get('http://127.0.0.1:8000/api/users/2').json())
+pprint(get('http://127.0.0.1:8000/api/users/7').json())
 print('\033[32m!!!!!!!!!!!!!!!!\033[0m')
 # запрос к несуществующему пользователю
 pprint(get('http://127.0.0.1:8000/api/users/99').json())

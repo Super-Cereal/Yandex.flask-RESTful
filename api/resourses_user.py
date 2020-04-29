@@ -21,7 +21,7 @@ class UserResourse(Resource):
         user = session.query(User).get(user_id)
         return jsonify(
             {
-                'users': user.to_dict(only=['id', 'surname', 'name', 'age', 'hometown', 'position', 'speciality', 'address', 'email'])
+                'users': [user.to_dict(only=['id', 'surname', 'name', 'age', 'hometown', 'position', 'speciality', 'address', 'email'])]
             }
         )
 

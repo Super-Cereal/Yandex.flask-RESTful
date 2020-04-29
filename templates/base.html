@@ -17,14 +17,16 @@
             <h2>User box</h2>
             <div class="flexbox flex_c_nowr">
                 {% if current_user.is_authenticated %}
-                    <a class="btn" href="/logout">{{ current_user.surname }} {{current_user.name }}</a>
+                    <a class="btn" href="/home/{{ current_user.id }}">{{ current_user.surname }} {{current_user.name }}</a>
+                    <a class="btn" href="/logout">Выйти из аккаунта</a>
                 {% else %}
-                    <a class="btn" href="/register">Зарегистрироваться</a>
+                    <a class="btn" href="/register">Зарегистрироваться</>
                     <a class="btn" href="/login">Войти</a>
                 {% endif %}
             </div>
             {% block userbox %}{% endblock %}
             <div class="flexbox flex_c_nowr usernav">
+                <a href="/users" class="btn">К пользователям</a>
                 <a href="/" class="btn">К работам</a>
                 <a href="/departments" class="btn">К департаментам</a>
             </div>

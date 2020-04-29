@@ -65,6 +65,7 @@ def register():
             surname=form.surname.data,
             name=form.name.data,
             age=form.age.data,
+            hometown=form.hometown.data,
             position=form.position.data,
             speciality=form.speciality.data,
             address=form.address.data,
@@ -102,13 +103,66 @@ def logout():
     return redirect("/")
 
 
+@app.route('/deluser/<int:user_id>')
+def del_user(user_id):
+    if not current_user.is_authenticated:
+        abort(403)
+    session = db_session.create_session()
+    user = session.query(User).get(user_id)
+    if not user:
+        abort(404)
+    elif current_user != user and current_user.id != 1:
+        abort(403)
+    session.delete(user)
+    session.commit()
+    return redirect('/users')
+
+
+@app.route('/edit_user/<int:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    form = RegisterForm()
+    session = db_session.create_session()
+    user = session.query(User).get(user_id)
+    if not user:
+        abort(404)
+    elif not current_user.is_authenticated or (current_user != user and current_user.id != 1):
+        abort(403)
+    if form.validate_on_submit():
+        user.name = form.name.data
+        user.surname = form.surname.data
+        user.age = form.age.data
+        user.hometown = form.hometown.data
+        user.email = form.email.data
+        user.position = form.position.data
+        user.speciality = form.speciality.data
+        user.address = form.address.data
+        user.set_password(form.password.data)
+        session.commit()
+        return redirect('/users')
+    else:
+        form.name.data = user.name
+        form.surname.data = user.surname
+        form.age.data = user.age
+        form.hometown.data = user.hometown
+        form.email.data = user.email
+        form.position.data = user.position
+        form.speciality.data = user.speciality
+        form.address.data = user.address
+        return render_template('form_register.html', title="Edit user", form=form)
+
+
+@app.route('/users')
+def users_table():
+    session = db_session.create_session()
+    users = session.query(User).all()
+    return render_template("user_table.html", title="User table", users=users)
+
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
     session = db_session.create_session()
     jobs = session.query(Jobs).all()
-    return render_template("jobs_table.html", title="Activity table",
-                           current_user=current_user,
-                           jobs=jobs)
+    return render_template("jobs_table.html", title="Activity table", jobs=jobs)
 
 
 @app.route('/addjob', methods=['GET', 'POST'])
@@ -240,16 +294,13 @@ def del_departments(id):
     return redirect('/departments')
 
 
-@app.route('/users_show/<int:user_id>', methods=['GET'])
+@app.route('/home/<int:user_id>', methods=['GET'])
 def users_show(user_id):
     user = requests.get(f'http://127.0.0.1:8000/api/users/{user_id}').json()
-    if 'error' in user:
-        return f'<h1 style="text-align: center">error: {user["error"]}</h1>'
-
-    image = requests.get(f'http://127.0.0.1:8000/api/yamaps/{user["hometown"]}').json()
+    image = requests.get(f'http://127.0.0.1:8000/api/yamaps/{user["users"][0]["hometown"]}').json()
     if 'error' in image:
-        return f'<h1 style="text-align: center">{image["error"]}</h1>'
-    return render_template('image_hometown.html', image=image['image'], user=user)
+        image = yandex_api.recode_image(open('static/img/none_image', 'rb'))
+    return render_template('home.html', image=image['image'], user=user["users"][0])
 
 
 if __name__ == "__main__":

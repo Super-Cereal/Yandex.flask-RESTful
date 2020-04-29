@@ -49,6 +49,8 @@ a:hover {
     border-radius: 3px;
 }
 
+.btn-alert-danger { background-color: rgba(85, 0, 0, 0.6); }
+
 .flexbox { display: flex; }
 
 .flex_r_nowr { flex-flow: row nowrap; }
@@ -81,9 +83,7 @@ a:hover {
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAMAAAApB0NrAAAABlBMVEX///+pqalTpKl9AAAAAnRSTlMAGovxNEIAAAAdSURBVDjLY2AAAUaG4UYxDDsfjfp91O+jfqfE7wCzpQCw/dq+qQAAAABJRU5ErkJggg==");
 }
 
-.center_content {
-    text-align: center;
-}
+.home_page-content { text-align: center; margin: auto; max-width: 460px; }
 
 .form { margin: auto; table-layout: fixed; width: 500px; }
 

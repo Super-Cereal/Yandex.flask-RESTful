@@ -31,5 +31,9 @@ def get_map(town):
     map_response = get(static_map_api_server, params=map_params)
     if not map_response:
         return jsonify({'error': f"Error during query execution: {map_response.url}"})
-    image = base64.b64encode(map_response.content)
+    return recode_image(map_response.content)
+
+
+def recode_image(byte_image):
+    image = base64.b64encode(byte_image)
     return jsonify({'image': image.decode('utf-8')})

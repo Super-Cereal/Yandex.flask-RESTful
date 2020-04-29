@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 style="text-align: center;">Users Log</h1>
+    {% for user in users %}
+        <table class="average-table">
+            <caption>
+                <a href="/home/{{ user.id }}">User # {{ user.id }}</a>
+                {% if current_user.is_authenticated and (current_user == user or current_user.id == 1) %}
+                    <div style="font-size: 15px;" class='flexbox flex_r_nowr flex_jcspacebetween_aicenter'>
+                        <a href="/edit_user/{{ user.id }}">
+                            <img src="/static/img/edit_icon1.png" alt="" width='13px'>edit</a>
+                        <a href="/deluser/{{ user.id }}">
+                            <img src="/static/img/delete_icon1.png" alt="" width="13px">delete</a>
+                    </div>
+                {% endif %}
+            </caption>
+            <thead>
+                <th>User</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Hometown</th>
+                <th>Position</th>
+                <th>Speciality</th>
+                <th>Address</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ user.name }} {{ user.surname }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.hometown }}</td>
+                    <td>{{ user.position }}</td>
+                    <td>{{ user.speciality }}</td>
+                    <td>{{ user.address }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}

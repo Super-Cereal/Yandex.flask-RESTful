@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="home_page-content">
+        <h2>{{ user['surname'] }} {{ user['name'] }}</h2>
+        <h2>Hometown - {{ user['hometown'] }}</h2>
+        <img src="{{ 'data:image/png;base64,' + image }}" alt="" width="450px" height="450px">
+        {% if current_user.id == user['id'] or current_user.id == 1 %}
+            <a href="/edituser/{{ current_user.id }}" class="btn">Редактировать аккаунт</a>
+            {% if current_user.id == user['id'] %}
+                <a href="/logout" class="btn">Выйти из аккаунта</a>
+            {% endif %}
+            <a href="/deluser/{{ current_user.id }}" class="btn btn-alert-danger">Удалить аккаунт</a>
+        {% endif %}
+    </div>
+{% endblock %}

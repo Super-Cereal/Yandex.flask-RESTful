@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Email, EqualTo
 
 
 class RegisterForm(FlaskForm):
-    login_or_email = StringField('Login/email', validators=[DataRequired('Поле должно быть заполнено'),
+    email = StringField('Login/email', validators=[DataRequired('Поле должно быть заполнено'),
                                                             Email('Некоректный email')])
     password = PasswordField('Password', validators=[DataRequired('Поле должно быть заполнено')])
     password_again = PasswordField('Repeat password', validators=[DataRequired('Поле должно быть заполнено'),
