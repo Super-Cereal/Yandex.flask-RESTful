@@ -14,6 +14,7 @@ from flask_restful import Api
 from api import yandex_api, resourses_user, resourses_jobs
 
 import requests
+import os
 # Логин и пароль Альбы Флорес - nairobi@mars.org  |  1234
 # Логин и пароль Капитана - scott_shief@mars.org  |  1234
 
@@ -304,7 +305,8 @@ def users_show(user_id):
 
 
 if __name__ == "__main__":
-    app.run(port=8000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 '''
